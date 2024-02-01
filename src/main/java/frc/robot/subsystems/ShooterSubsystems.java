@@ -1,6 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 
                                                 // Made by Malek Ettaher
 package frc.robot.subsystems;
@@ -9,14 +6,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.Encoder;
+import com.revrobotics.PWMSparkMax;
+
+
 // Since motor controller groups have been deprecated which means there is no grouping of the motors. It is just easier to code it seperately than finding a new solution.
-// Also, this is using the old spark motor controller for the intake which SUK BAWS, so expect this not to work well :)
 
 // Creating motors
 CANSparkMax Liftmotor;
 CANSparkMax Shootingmotor1;
 CANSparkMax Shootingmotor2;
-CANSparkMax IntakeMotor;
+// Intake using PWM motor controllers
+Spark IntakeMotor = new Spark(1); // 1 is the RIO PWM port this is connected to
 // Creating Encoders
 Encoder LiftEncoder;
 Encoder ShootingEncoder1;
@@ -26,10 +26,9 @@ Encoder IntakeEncoder;
 public ShooterSubsystem(CANSparkMax Liftmotor, CANSparkMax Shootingmotor1, CANSparkMax Shootingmotor2, CANSparkMax IntakeMotor ) {
 System.out.println("Creating new Subsystem-");
 
-this.Liftmotor = new MotorController();
-this.Shootingmotor1 = new MotorController();
-this.Shootingmotor2 = new MotorController();
-this.IntakeMotor = new MotorController();
+this.Liftmotor = new MotorController(5);
+this.Shootingmotor1 = new MotorController(6);
+this.Shootingmotor2 = new MotorController(7);
 
 System.out.println("Subsystem Created.");
 
@@ -69,20 +68,17 @@ public void resetShooterEncoders() {
 
 // Getting Lift speed
 public double getLiftSpeed() {
-return Liftmotor.get();
+return Liftmotor.speed();
 }
 
 // Getting Shooting motor 1's speed
 public double getShooter1Speed(){
-return Shootingmotor1.get();
+return Shootingmotor1.speed();
 
 }
 
 // Getting Shooting motor 2's Speed
 public double getShooter2Speed(){
-return Shootingmotor2.get();
+return Shootingmotor2.speed();
 }
-// Getting Intake motor's speed
-public double getIntakeSpeed(){
-return IntakeMotor.get();
-}
+
