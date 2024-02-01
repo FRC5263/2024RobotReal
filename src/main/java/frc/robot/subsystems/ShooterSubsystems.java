@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.Encoder;
-import com.revrobotics.PWMSparkMax;
 // Since motor controller groups have been deprecated which means there is no grouping of the motors. It is just easier to code it seperately than finding a new solution.
 // Also, this is using the old spark motor controller for the intake which SUK BAWS, so expect this not to work well :)
 
@@ -17,23 +16,20 @@ import com.revrobotics.PWMSparkMax;
 CANSparkMax Liftmotor;
 CANSparkMax Shootingmotor1;
 CANSparkMax Shootingmotor2;
-//PWM motor
-PWMSparkMax IntakeMotor;
+CANSparkMax IntakeMotor;
 // Creating Encoders
 Encoder LiftEncoder;
 Encoder ShootingEncoder1;
 Encoder ShootingEncoder2;
-// PWM Encoder
 Encoder IntakeEncoder;
-
 // Creating Subsystem
-public ShooterSubsystem(CANSparkMax Liftmotor, CANSparkMax Shootingmotor1, CANSparkMax Shootingmotor2, PWMSparkMax IntakeMotor ) {
+public ShooterSubsystem(CANSparkMax Liftmotor, CANSparkMax Shootingmotor1, CANSparkMax Shootingmotor2, CANSparkMax IntakeMotor ) {
 System.out.println("Creating new Subsystem-");
 
-this.Liftmotor = Liftmotor;
-this.Shootingmotor1 = Shootingmotor1;
-this.Shootingmotor2 = Shootingmotor2;
-this.IntakeMotor = IntakeMotor;
+this.Liftmotor = new MotorController();
+this.Shootingmotor1 = new MotorController();
+this.Shootingmotor2 = new MotorController();
+this.IntakeMotor = new MotorController();
 
 System.out.println("Subsystem Created.");
 
@@ -55,7 +51,7 @@ return encoders [encoder].get();
 }
 else{
 System.out.println(encoders[encoder]);
-System.out.println("Check the connection of the encoder, if it is not unplugged, it may be broken.")
+System.out.println("Check the connection of the encoder, if it is not unplugged, it may be broken\n")
 return -1;
 
 }
